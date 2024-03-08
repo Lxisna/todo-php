@@ -1,0 +1,23 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+
+	<p class="text-success">
+		{{name}}
+	</p>
+
+	{% if tasks|length > 0 %}
+
+		{% for key,task in tasks %}
+
+			<div>
+				{{task.task}}
+			</div>
+
+		{% endfor %}
+
+	{% else %}
+		There's nothing yet !
+	{% endif %}
+
+{% endblock %}
