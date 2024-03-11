@@ -1,0 +1,5 @@
+<select class="form-control" name="status">
+	{% for option in optionList %}
+		<option value="{{option}}" {% if option is same as(task.status) %} selected="selected" {% endif %}>{{option}}</option> 
+	{% endfor %}
+</select>

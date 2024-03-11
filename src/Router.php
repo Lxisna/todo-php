@@ -1,8 +1,8 @@
 <?php
 namespace App\PhpTodolist;
 
-use App\PhpTodolist\HomeController;
-use App\PhpTodolist\TaskController;
+use App\PhpTodolist\Controller\TaskController;
+use App\PhpTodolist\Controller\HomeController;
 
 require "../vendor/autoload.php";
 
@@ -10,65 +10,55 @@ class Router
 {
     public function index()
     {
-        $routes = [
-            '/' => [
-                'controller' => 'HomeController@index',
-                'method' => 'GET',
-            ],
-            '/task' => [
-                'controller' => 'TaskController@index',
-                'method' => 'GET',
-            ],
-            '/task/new' => [
-                'controller' => 'TaskController@new',
-                'method' => 'POST',
-            ],
-            '/task/:id' => [
-                'controller' => 'TaskController@show',
-                'method' => 'GET',
-            ],
-        ];
 // Récupérer l'URL demandée
         $url = $_SERVER['REQUEST_URI'];
+        if( ($pos = strpos($url, '?')) !== false) $url = substr($url, 0, $pos);
+
 // Trouver le controller et la méthode correspondante
         if ($url === "/todo_list/public/") {
 // Instancier le contrôleur et appeler la méthode
             $controller = new HomeController();
             $controller->index();
-
-        }
-        if ($url === "/todo_list/public/task/") {
-            // Instancier le contrôleur et appeler la méthode
-            $controller = new TaskController();
-            $controller->index();
-        }
-
-        if ($url === "/todo_list/public/task/add") {
-            // Instancier le contrôleur et appeler la méthode
-            $controller = new TaskController();
-            $controller->add();
         }
 
         $parts = explode('/', $url);
-        if (array_key_exists(5, $parts) && $parts[5] !== "" && $parts[4] === "delete" && $parts[3] === "task") {
+        if (array_key_exists(3, $parts) && $parts[3] === "task") {
             // Instancier le contrôleur et appeler la méthode
             $controller = new TaskController();
-            $controller->delete((int) $parts[5]);
-        }
 
-        $parts = explode('/', $url);
-        if (array_key_exists(4, $parts) && $parts[4] !== "" && (int) $parts[4] && $parts[3] === "task") {
-            // Instancier le contrôleur et appeler la méthode
-            $controller = new TaskController();
-            $controller->show((int) $parts[4]);
+            if (array_key_exists(4, $parts)) {
+                switch ($parts[4]) {
+                    case "add":
+                        $controller->add();
+                        break;
+                    case "update":
+                        if (array_key_exists(5, $parts)) {
+                            $controller->update((int) $parts[5]);
+                        }
+                        break;
+                    case "delete":
+                        if (array_key_exists(5, $parts)) {
+                            $controller->delete((int) $parts[5]);
+                        }
+                        break;
+                    case "search":
+                        if (array_key_exists(4, $parts)) {
+                            $controller->search((int) $parts[4]);
+                        }
+                        break;
+                    default:
+                        $id = (int) $parts[4];
+                        if ($id > 0) {
+                            $controller->show((int) $parts[4]);
+                        } else {
+                            $controller->index();
+                        }
+                        break;
+                }
+            } else {
+                $controller->index();
+            }
         }
-        $parts = explode('/', $url);
-        if (array_key_exists(5, $parts) && $parts[5] !== "" && $parts[4] === "update" && $parts[3] === "task") {
-            // Instancier le contrôleur et appeler la méthode
-            $controller = new TaskController();
-            $controller->update((int) $parts[5]);
-        }
-
     }
 // Gérer les erreurs (par exemple, afficher une page 404)
 }

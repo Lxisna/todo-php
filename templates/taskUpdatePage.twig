@@ -6,16 +6,11 @@
 	</div>
 	<form method="POST">
 		<div class="mb-3">
-			<input type="text" class="form-control" placeholder="Title" name="title">
+			<input type="text" class="form-control" placeholder="Title" name="title" value="{{task.title}}">
 		</div>
-
 		<div class="mb-3">
-			<select class="form-control" name="status">
-				<option value="In Progress">In progress</option>
-				<option value="Done">Done</option>
-			</select>
+			{% include "select.twig" %}
 		</div>
 		<button type="submit" class="btn btn-primary">valider</button>
 	</form>
-
 {% endblock %}

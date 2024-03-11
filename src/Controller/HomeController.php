@@ -1,5 +1,5 @@
 <?php
-namespace App\PhpTodolist;
+namespace App\PhpTodolist\Controller;
 
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -13,8 +13,7 @@ class HomeController
             ['task' => 'finir le projet', 'created' => '2024/02/01'],
             ['task' => 'aller au cinema', 'created' => '2021/11/01'],
         ];
-        // var_dump(dirname(__DIR__));
-        $loader = new FilesystemLoader(dirname(__DIR__) . "/templates");
+        $loader = new FilesystemLoader("../templates");
         //initialiser twig
         $twig = new Environment($loader);
         //rendre une vue
