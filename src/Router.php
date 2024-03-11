@@ -42,12 +42,31 @@ class Router
             $controller = new TaskController();
             $controller->index();
         }
-        $parts = explode('/', $url);
 
-        if (array_key_exists(4, $parts) && $parts[4] !== "" && $parts[3] === "task") {
+        if ($url === "/todo_list/public/task/add") {
+            // Instancier le contrôleur et appeler la méthode
+            $controller = new TaskController();
+            $controller->add();
+        }
+
+        $parts = explode('/', $url);
+        if (array_key_exists(5, $parts) && $parts[5] !== "" && $parts[4] === "delete" && $parts[3] === "task") {
+            // Instancier le contrôleur et appeler la méthode
+            $controller = new TaskController();
+            $controller->delete((int) $parts[5]);
+        }
+
+        $parts = explode('/', $url);
+        if (array_key_exists(4, $parts) && $parts[4] !== "" && (int) $parts[4] && $parts[3] === "task") {
             // Instancier le contrôleur et appeler la méthode
             $controller = new TaskController();
             $controller->show((int) $parts[4]);
+        }
+        $parts = explode('/', $url);
+        if (array_key_exists(5, $parts) && $parts[5] !== "" && $parts[4] === "update" && $parts[3] === "task") {
+            // Instancier le contrôleur et appeler la méthode
+            $controller = new TaskController();
+            $controller->update((int) $parts[5]);
         }
 
     }

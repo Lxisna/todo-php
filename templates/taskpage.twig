@@ -4,17 +4,10 @@
 	<div class=" container rounded-3 border border-2 border-dark my-5 bg-white" style="height:auto;">
 		<div>
 			<h1 class=" h1">To Do List</h1>
-			<div class="row">
-				<div class=" col-8">
-					<input class=" py-3 form-control shadow" placeholder="input your task" type="text" id="inputText">
-				</div>
-				<div
-					class="col-2">
-					<!-- <i onclick="addList()" class=" btn btn-dark rounded-pill fas fa-4x fa-plus-circle "></i> -->
-					<button onclick="addList()" class=" mt-2 btn btn-dark">
-						Add
-					</button>
-				</div>
+			<div class="d-flex justify-content-end">
+				<a href="/todo_list/public/task/add" class="btn btn-outline-dark">
+					Add a new task
+				</a>
 			</div>
 		</div>
 		<hr>
@@ -32,8 +25,16 @@
 									<a href="/todo_list/public/task/{{task.id}}">{{task.title}}</a>
 								</div>
 								<div class="col-4">
-									<button class=" btn btn-dark">Delete</button>
-									<button class=" btn btn-dark">Edit</button>
+									<button class=" btn btn-dark">
+										<a href="/todo_list/public/task/delete/{{task.id}}">
+											Delete
+										</a>
+									</button>
+									<button class=" btn btn-dark">
+										<a href="/todo_list/public/task/update/{{task.id}}">
+											Edit
+										</a>
+									</button>
 								</div>
 							</div>
 						</li>

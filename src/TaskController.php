@@ -23,12 +23,12 @@ class TaskController
         $tasks = $pdo->selectAll(
             "SELECT * FROM task"
         );
-        // echo "<pre>";
-        // var_dump($tasks);
-        // echo "</pre>";
         echo $twig->render('taskpage.twig',
             ['tasks' => $tasks,
             ]);
+
+        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // }
     }
 
     public function show(int $id)
@@ -57,4 +57,65 @@ class TaskController
                 'task' => $task,
             ]);
     }
+
+    public function add()
+    {
+        $loader = new FilesystemLoader(dirname(__DIR__) . "/templates");
+        $twig = new Environment($loader);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $pdo = new Database(
+                "localhost",
+                "todolist_php",
+                "8889",
+                "root",
+                "root",
+            );
+
+            $task = $pdo->query(
+                "INSERT INTO task (title, status) VALUES (?, ?)",
+                [$_POST['title'], $_POST['status']]
+            );
+            header("Location: http://localhost:8080/todo_list/public/task/");
+        }
+
+        echo $twig->render('taskAddPage.twig', []); //转向我们需要的页面
+    }
+
+    public function delete(int $id)
+    {
+        $pdo = new Database(
+            "localhost",
+            "todolist_php",
+            "8889",
+            "root",
+            "root",
+        );
+
+        $pdo->query(
+            "DELETE FROM task WHERE id=" . $id);
+        header("Location: http://localhost:8080/todo_list/public/task/");
+    }
+
+    public function update($id)
+    {
+        $loader = new FilesystemLoader(dirname(__DIR__) . "/templates");
+        $twig = new Environment($loader);
+
+        // if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        //     $pdo = new Database(
+        //         "localhost",
+        //         "todolist_php",
+        //         "8889",
+        //         "root",
+        //         "root",
+        //     );
+
+        //     $pdo->query(
+        //         "UPDATE task SET title= ?, status= ?, WHERE id=" . $id, [$_POST['title'], $_POST['status']]);
+        //     header("Location: http://localhost:8080/todo_list/public/task/");
+        // }
+        echo $twig->render('taskUpdatePage.twig', []); //转向我们需要的页面
+    }
+
 }
