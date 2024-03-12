@@ -10,13 +10,11 @@ class Router
 {
     public function index()
     {
-// Récupérer l'URL demandée
         $url = $_SERVER['REQUEST_URI'];
         if( ($pos = strpos($url, '?')) !== false) $url = substr($url, 0, $pos);
 
-// Trouver le controller et la méthode correspondante
         if ($url === "/todo_list/public/") {
-// Instancier le contrôleur et appeler la méthode
+
             $controller = new HomeController();
             $controller->index();
         }
@@ -41,9 +39,14 @@ class Router
                             $controller->delete((int) $parts[5]);
                         }
                         break;
-                    case "search":
+                    case "?search=loki":
                         if (array_key_exists(4, $parts)) {
                             $controller->search((int) $parts[4]);
+                        }
+                        break;
+                    case "?status=Done":
+                        if (array_key_exists(4, $parts)) {
+                            $controller->filter((int) $parts[4]);
                         }
                         break;
                     default:
@@ -60,5 +63,4 @@ class Router
             }
         }
     }
-// Gérer les erreurs (par exemple, afficher une page 404)
 }

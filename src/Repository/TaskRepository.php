@@ -92,4 +92,19 @@ class TaskRepository {
     $tasks = $pdo->selectAll("SELECT * FROM task WHERE title LIKE '%" . $value . "%' ORDER BY id");
     return $tasks;
   }
+
+  public function filter(){
+    $pdo = new Database(
+      "localhost",
+      "todolist_php",
+      "8889",
+      "root",
+      "root",
+    );
+    
+    $filterByStatus = $_POST['status'];
+    // var_dump($_POST['status']);
+    $tasks = $pdo->selectAll("SELECT * FROM task WHERE status='$filterByStatus'");
+    return $tasks;
+  }
 }

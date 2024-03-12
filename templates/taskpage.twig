@@ -5,45 +5,59 @@
 		<div>
 			<h1 class=" h1">To Do List</h1>
 			<div class="d-flex justify-content-end">
-				<a href="/todo_list/public/task/add" class="btn btn-outline-dark">
-					Add a new task
-				</a>
+			
+		<form method="POST">
+			<div class="form-check">
+					<input class="form-check-input" type="radio" name="status" id="flexRadioDefault1" value="Not Started">
+					<label class="form-check-label" for="flexRadioDefault1">
+						Not Started
+					</label>					
 			</div>
+
+			<div class="form-check">
+					<input class="form-check-input" type="radio" name="status" id="flexRadioDefault2" value="In progress">
+					<label class="form-check-label" for="flexRadioDefault2"> 
+					In progress  
+					</label>
+			</div>
+			
+			<div class="form-check">
+					<input class="form-check-input" type="radio" name="status" id="flexRadioDefault2" value="Done">
+					<label class="form-check-label" for="flexRadioDefault2">
+						Done
+					</label>
+			</div>
+				<button type="submit" class="btn btn-outline-dark">Submit</button>
+		</form>
+		</div>
+
+		<a href="/todo_list/public/task/add" class="btn btn-outline-dark">
+					Add a new task
+		</a>
 		</div>
 		<hr>
-		<div class="row rounded bg-white">
-			<div class=" col-12">
 				<ul class=" list-group container" id="task">
-
 					{% for task in tasks %}
 						<li class=" my-3 py-3 shadow list-group-item " style="display:flex" id="tasks{{task.id}}">
-							<div class="row" style="display:contents">
-								<div class="col-1">
-									<input class="" type="checkbox">
-								</div>
+							<div style="display:contents">
 								<div class="col-6">
 									<a href="/todo_list/public/task/{{task.id}}">{{task.title}}</a>
 								</div>
+								<div class="px-2 me-5" >
+									<span class="badge text-bg-warning">{{task.status}}</span>
+								</div>
 								<div class="col-4">
-									<button class=" btn btn-dark">
-										<a href="/todo_list/public/task/delete/{{task.id}}">
+										<a href="/todo_list/public/task/delete/{{task.id}}" class="btn btn-outline-dark">
 											Delete
 										</a>
-									</button>
-									<button class=" btn btn-dark">
-										<a href="/todo_list/public/task/update/{{task.id}}">
+										<a href="/todo_list/public/task/update/{{task.id}}" class="btn btn-outline-dark">
 											Edit
 										</a>
-									</button>
 								</div>
 							</div>
 						</li>
-
 					{% endfor %}
-
 				</ul>
-			</div>
-		</div>
 	</div>
 
 {% endblock %}
